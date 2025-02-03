@@ -226,8 +226,41 @@ def submit_application():
 def uploaded_file(filename):
     return send_from_directory(os.path.join(app.root_path, 'static/uploads'), filename)
 
+def create_folders():
+    """Creates the necessary folders: instance, pdfs, and static/uploads."""
+
+    # Create 'instance' folder
+    instance_path = "instance"
+    if not os.path.exists(instance_path):
+        os.makedirs(instance_path)
+        print(f"Created folder: {instance_path}")
+    else:
+         print(f"Folder already exists: {instance_path}")
+
+    # Create 'pdfs' folder
+    pdfs_path = "pdfs"
+    if not os.path.exists(pdfs_path):
+        os.makedirs(pdfs_path)
+        print(f"Created folder: {pdfs_path}")
+    else:
+        print(f"Folder already exists: {pdfs_path}")
+
+
+    # Create 'uploads' folder inside 'static'
+    static_uploads_path = os.path.join("static", "uploads")
+
+    if not os.path.exists("static"):
+      os.makedirs("static")
+      print("Created folder: static")
+    else:
+      print("Folder already exists: static")
+
+    if not os.path.exists(static_uploads_path):
+        os.makedirs(static_uploads_path)
+        print(f"Created folder: {static_uploads_path}")
+    else:
+        print(f"Folder already exists: {static_uploads_path}")
+
 if __name__ == '__main__':
-    with app.test_request_context():
-        for rule in app.url_map.iter_rules():
-            print(rule.endpoint, rule)
+    create_folders()
     app.run(debug=True)
