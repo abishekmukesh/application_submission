@@ -1,0 +1,188 @@
+<style>
+    .form-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  
+    .form-title {
+      color: #333;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #4f46e5;
+    }
+  
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+  
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #374151;
+      font-weight: 500;
+    }
+  
+    .form-input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      margin-bottom: 0.25rem;
+    }
+  
+    .form-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      ring: 2px #4f46e5;
+    }
+  
+    .file-input {
+      display: block;
+      margin-top: 0.5rem;
+    }
+  
+    .file-label {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+  
+    .submit-btn {
+      background-color: #4f46e5;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+  
+    .submit-btn:hover {
+      background-color: #4338ca;
+    }
+  
+    .errors {
+      list-style: none;
+      padding: 0;
+      margin: 0.25rem 0;
+      color: #dc2626;
+      font-size: 0.875rem;
+    }
+  </style>
+  
+  {% block content %}
+  <div class="form-container">
+      <h2 class="form-title">Application Form</h2>
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('submit_application') }}">
+          {{ form.hidden_tag() }}
+          
+          <div class="form-group">
+              <label class="form-label">{{ form.first_name.label }}</label>
+              {{ form.first_name(class="form-input") }}
+              {% if form.first_name.errors %}
+                  <ul class="errors">
+                      {% for error in form.first_name.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.last_name.label }}</label>
+              {{ form.last_name(class="form-input") }}
+              {% if form.last_name.errors %}
+                  <ul class="errors">
+                      {% for error in form.last_name.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.email.label }}</label>
+              {{ form.email(class="form-input") }}
+              {% if form.email.errors %}
+                  <ul class="errors">
+                      {% for error in form.email.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.phone.label }}</label>
+              {{ form.phone(class="form-input") }}
+              {% if form.phone.errors %}
+                  <ul class="errors">
+                      {% for error in form.phone.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.degree.label }}</label>
+              {{ form.degree(class="form-input") }}
+              {% if form.degree.errors %}
+                  <ul class="errors">
+                      {% for error in form.degree.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.university.label }}</label>
+              {{ form.university(class="form-input") }}
+              {% if form.university.errors %}
+                  <ul class="errors">
+                      {% for error in form.university.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.id_proof.label }}</label>
+              <span class="file-label">(PDF, JPG, PNG)</span>
+              {{ form.id_proof(class="file-input") }}
+              {% if form.id_proof.errors %}
+                  <ul class="errors">
+                      {% for error in form.id_proof.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              <label class="form-label">{{ form.degree_certificate.label }}</label>
+              <span class="file-label">(PDF, JPG, PNG)</span>
+              {{ form.degree_certificate(class="file-input") }}
+              {% if form.degree_certificate.errors %}
+                  <ul class="errors">
+                      {% for error in form.degree_certificate.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+  
+          <div class="form-group">
+              {{ form.submit(class="submit-btn") }}
+          </div>
+      </form>
+  </div>
+  {% endblock %}

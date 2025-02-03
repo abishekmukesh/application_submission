@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %} | College Portal</title>
+    <style>
+        .tab-content {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <nav class="top-nav bg-gray-800 text-white p-4 shadow-md">
+        <ul class="flex justify-between items-center container mx-auto">
+            <li class="mr-6"><a href="{{ url_for('index') }}" class="text-white hover:text-gray-300">Home</a></li>
+            {% if current_user.username %}
+                <li class="mr-6"><a href="{{ url_for('admin_dashboard') }}" class="text-white hover:text-gray-300">Admin Dashboard</a></li>
+            {% else %}
+                <li class="mr-6"><a href="{{ url_for('student_dashboard') }}" class="text-white hover:text-gray-300">Dashboard</a></li>
+            {% endif %}
+            <li class="mr-6"><a href="{{ url_for('auth.admin_login') }}" class="text-white hover:text-gray-300">Admin Login</a></li>
+            <li class="mr-6"><a href="{{ url_for('auth.student_login') }}" class="text-white hover:text-gray-300">Student Login</a></li>
+            <li><a href="{{ url_for('auth.logout') }}" class="text-white hover:text-gray-300">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} p-4 mb-6 rounded-lg shadow-md">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

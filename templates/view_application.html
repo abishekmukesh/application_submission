@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6">Application Details</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <p><strong>Name:</strong> {{ application.first_name }} {{ application.last_name }}</p>
+      <p><strong>Email:</strong> {{ application.email }}</p>
+      <p><strong>Phone:</strong> {{ application.phone }}</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <p><strong>Degree:</strong> {{ application.degree }}</p>
+      <p><strong>University:</strong> {{ application.university }}</p>
+      <p><strong>Submitted On:</strong> {{ application.created_at.strftime('%b %d, %Y') }}</p>
+    </div>
+  </div>
+
+  {% if application.status == 'Pending' %}
+  <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+    <h3 class="text-xl mb-4">Update Status</h3>
+    <form method="POST">
+      {{ form.csrf_token }}
+      <div class="mb-4">
+        {{ form.status.label(class="block mb-2") }}
+        {{ form.status(class="w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-indigo-500") }}
+      </div>
+      <div class="flex items-center justify-end">
+        {{ form.submit(class="px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition") }}
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if application.status == 'Approved' %}
+  <div class="mt-8 text-center">
+    <a href="{{ url_for('download_file', filename=application.pdf_path) }}" class="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">Download Admission Letter</a>
+  </div>
+  {% endif %}
+
+  <div class="mt-8 text-center">
+    <a href="{{ url_for('admin_dashboard') }}" class="text-indigo-600 hover:underline">Back to Dashboard</a>
+  </div>
+</div>
+{% endblock %}

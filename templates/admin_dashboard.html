@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-6">Admin Dashboard</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-3 px-6 text-left">ID</th>
+                    <th class="py-3 px-6 text-left">Name</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-left">Date</th>
+                    <th class="py-3 px-6 text-left">Status</th>
+                    <th class="py-3 px-6 text-left">ID Proof</th>
+                    <th class="py-3 px-6 text-left">Degree Certificate</th>
+                    <th class="py-3 px-6 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for application in applications %}
+                <tr class="hover:bg-gray-100 transition duration-200">
+                    <td class="py-4 px-6">{{ application.id }}</td>
+                    <td class="py-4 px-6">{{ application.first_name }} {{ application.last_name }}</td>
+                    <td class="py-4 px-6">{{ application.email }}</td>
+                    <td class="py-4 px-6">{{ application.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td class="py-4 px-6">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold {% if application.status == 'Approved' %}bg-green-100 text-green-800{% elif application.status == 'Pending' %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {{ application.status }}
+                        </span>
+                    </td>
+                    <td class="py-4 px-6">
+                        {% if application.id_proof %}
+                            <a href="{{ url_for('static', filename='uploads/' + application.id_proof) }}" target="_blank">
+                                <img src="{{ url_for('static', filename='uploads/' + application.id_proof) }}" 
+                                     alt="ID Proof" class="h-10 w-auto hover:opacity-75">
+                            </a>
+                        {% else %}
+                            <span class="text-gray-400">No ID Proof</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6">
+                        {% if application.degree_certificate %}
+                            <a href="{{ url_for('static', filename='uploads/' + application.degree_certificate) }}" target="_blank">
+                                <img src="{{ url_for('static', filename='uploads/' + application.degree_certificate) }}" 
+                                     alt="Degree Certificate" class="h-10 w-auto hover:opacity-75">
+                            </a>
+                        {% else %}
+                            <span class="text-gray-400">No Certificate</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6">
+                        <a href="{{ url_for('view_application', application_id=application.id) }}" class="text-indigo-600 hover:underline">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
